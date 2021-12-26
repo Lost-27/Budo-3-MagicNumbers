@@ -1,21 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
 public class MagicNumbers : MonoBehaviour
 {
     public int maxValue = 1000;
-    public int minValue = 0;
-    private int guess;
-    private int score;
+    public int minValue;
+    private int _guess;
+    private int _score;
 
-    bool gameOver;
+    private bool _gameOver;
 
-    private int defMaxValue;
-    private int defMinValue;
-    private int defGuess;
-    private int defScore;
+    private int _defMaxValue;
+    private int _defMinValue;
+    private int _defGuess;
+    private int _defScore;
 
     public Text mainText;
     public Text secondText;
@@ -24,44 +22,43 @@ public class MagicNumbers : MonoBehaviour
 
     void Start()
     {
-        score = 0;
+        _score = 0;
         
-        defScore = score;
-        defGuess = guess;
-        defMaxValue = maxValue;
-        defMinValue = minValue;
+        _defScore = _score;
+        _defGuess = _guess;
+        _defMaxValue = maxValue;
+        _defMinValue = minValue;
 
         ResetValue();
-
-        //Debug.Log($"!!!Если число не верно, то нажимай меньше (DownArrow), либо больше (UpArrow)!!! \nЕсли число угадано, нажми (Space)");
+        
     }
 
 
     void Update()
     {
-        if (!gameOver)
+        if (!_gameOver)
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                maxValue = guess;
+                maxValue = _guess;
                 GuessMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                minValue = guess;
+                minValue = _guess;
                 GuessMethod();
             }
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                gameOver = true;
+                _gameOver = true;
                 secondText.color = new Color(0.0f, 0.7f, 0.0f);
-                secondText.text = $"Число угадано! {guess}\n\nНажми Space для рестарта!";
+                secondText.text = $"Число угадано! {_guess}\n\nНажми Space для рестарта!";
             }
         }
         
         // Сброс игры
-        if (Input.GetKeyDown(KeyCode.Space) && gameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && _gameOver)
         {
             ResetValue();
         }
@@ -70,20 +67,22 @@ public class MagicNumbers : MonoBehaviour
 
     private void GuessMethod()
     {
-        scoreText.text = $"Кол-во попыток: {++score}";
-        guess = (minValue + maxValue) / 2;
-        secondText.text = $"Твоё число...{guess}?\n\nЕсли да, нажми Enter!";
+        scoreText.text = $"Кол-во попыток: {++_score}";
+        _guess = (minValue + maxValue) / 2;
+        secondText.text = $"Твоё число...{_guess}?\n\nЕсли да, нажми Enter!";
     }
     private void ResetValue()
     {
-        gameOver = false;
-        maxValue = defMaxValue;
-        minValue = defMinValue;
-        score = defScore;
-        guess = defGuess;
+        _gameOver = false;
+        maxValue = _defMaxValue;
+        minValue = _defMinValue;
+        _score = _defScore;
+        _guess = _defGuess;
 
         mainText.text = $"Загадай число от {minValue} до {maxValue}.";
-        scoreText.text = $"Кол-во попыток: {score}";
+        
+        scoreText.text = $"Кол-во попыток: {_score}";
+        
         secondText.color = new Color(0.7f, 0.06f, 0.06f);
         secondText.text = "Нажми UpArrow, чтобы начать!";
     }

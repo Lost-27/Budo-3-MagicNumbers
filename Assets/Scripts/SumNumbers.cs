@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
 public class SumNumbers : MonoBehaviour
 {
-    private int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    private int maxSum = 50;
-    private int sum;
-    private int num;
-    private int score;
+    private readonly int[] _numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    private int _maxSum = 50;
+    private int _sum;
+    private int _num;
+    private int _score;
 
-    bool gameOver;
+    private bool _gameOver;
 
     public Text mainText;
     public Text numText;
@@ -21,73 +19,73 @@ public class SumNumbers : MonoBehaviour
 
     void Start()
     {
-        score = 0;
-        sum = 0;
+        _score = 0;
+        _sum = 0;
 
         mainText.text = $"Нажимайте цифры на клавиатуре (от 1 до 9).";
-        sumText.text = $"Сумма: {sum} + {num} = {sum += num}";
+        sumText.text = $"Сумма: {_sum} + {_num} = {_sum += _num}";
     }
 
     void Update()
     {
-        if (!gameOver)
+        if (!_gameOver)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                num = numbers[0];
+                _num = _numbers[0];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                num = numbers[1];
+                _num = _numbers[1];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                num = numbers[2];
+                _num = _numbers[2];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                num = numbers[3];
+                _num = _numbers[3];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
-                num = numbers[4];
+                _num = _numbers[4];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha6))
             {
-                num = numbers[5];
+                _num = _numbers[5];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha7))
             {
-                num = numbers[6];
+                _num = _numbers[6];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
-                num = numbers[7];
+                _num = _numbers[7];
                 SumMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha9))
             {
-                num = numbers[8];
+                _num = _numbers[8];
                 SumMethod();
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.Space) && gameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && _gameOver)
         {
             ResetValue();
         }
@@ -96,26 +94,26 @@ public class SumNumbers : MonoBehaviour
 
     private void SumMethod()
     {
-        ++score;
-        numText.text = $"{num}";
-        sumText.text = $"Сумма: {sum} + {num} = {sum += num}";
+        ++_score;
+        numText.text = $"{_num}";
+        sumText.text = $"Сумма: {_sum} + {_num} = {_sum += _num}";
         
-        if (sum >= maxSum)
+        if (_sum >= _maxSum)
         {
-            gameOver = true;
-            mainText.text = $"Игра окончена! {sum} >= {maxSum}\n\nКол-во ходов: {score}.";
+            _gameOver = true;
+            mainText.text = $"Игра окончена! {_sum} >= {_maxSum}\n\nКол-во ходов: {_score}.";
             restText.gameObject.SetActive(true);
         }
     }
     private void ResetValue()
     {
-        gameOver = false;
-        sum = 0;
-        num = 0;
-        score = 0;
+        _gameOver = false;
+        _sum = 0;
+        _num = 0;
+        _score = 0;
         mainText.text = $"Нажимайте цифры на клавиатуре (от 1 до 9).";
-        numText.text = $"{num}";
-        sumText.text = $"Сумма: {sum} + {num} = {sum += num}";
+        numText.text = $"{_num}";
+        sumText.text = $"Сумма: {_sum} + {_num} = {_sum += _num}";
         restText.gameObject.SetActive(false);
     }
 }
