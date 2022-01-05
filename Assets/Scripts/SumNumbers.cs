@@ -3,117 +3,86 @@ using UnityEngine;
 
 public class SumNumbers : MonoBehaviour
 {
-    private readonly int[] _numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    private int _maxSum = 50;
+    #region Variables
+
+    public Text HeaderLabel;
+    public Text NumLabel;
+    public Text SumLabel;
+    public Text ResetLabel;
+
+    private const int _maxSum = 50;
     private int _sum;
     private int _num;
     private int _score;
 
-    private bool _gameOver;
+    private bool _isGameOver;
 
-    public Text mainText;
-    public Text numText;
-    public Text sumText;
-    public Text restText;
+    #endregion
 
 
-    void Start()
+    #region Unity lifecycle
+
+    private void Start()
     {
-        _score = 0;
-        _sum = 0;
-
-        mainText.text = $"Нажимайте цифры на клавиатуре (от 1 до 9).";
-        sumText.text = $"Сумма: {_sum} + {_num} = {_sum += _num}";
+        ResetValue();
     }
 
-    void Update()
+    private void Update()
     {
-        if (!_gameOver)
+        if (!_isGameOver)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            for (int number = 1; number <= 9; number++)
             {
-                _num = _numbers[0];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _num = _numbers[1];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                _num = _numbers[2];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                _num = _numbers[3];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                _num = _numbers[4];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                _num = _numbers[5];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                _num = _numbers[6];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                _num = _numbers[7];
-                SumMethod();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                _num = _numbers[8];
-                SumMethod();
+                if (Input.GetKeyDown(number.ToString()))
+                {
+                    _num = number;
+                    SumMethod();
+                }
             }
         }
-        
-        if (Input.GetKeyDown(KeyCode.Space) && _gameOver)
+
+        if (Input.GetKeyDown(KeyCode.Space) && _isGameOver)
         {
             ResetValue();
         }
-
     }
+
+    #endregion
+
+
+    #region Private methods
 
     private void SumMethod()
     {
-        ++_score;
-        numText.text = $"{_num}";
-        sumText.text = $"Сумма: {_sum} + {_num} = {_sum += _num}";
-        
+        _score++;
+        _sum += _num;
+        NumLabel.text = $"{_num}";
+        SumLabel.text = $"РЎСѓРјРјР°: {_sum} + {_num} = {_sum}";
+
         if (_sum >= _maxSum)
         {
-            _gameOver = true;
-            mainText.text = $"Игра окончена! {_sum} >= {_maxSum}\n\nКол-во ходов: {_score}.";
-            restText.gameObject.SetActive(true);
+            _isGameOver = true;
+            HeaderLabel.text = $"РРіСЂР° РѕРєРѕРЅС‡РµРЅР°! {_sum} >= {_maxSum}\n\nРљРѕР»-РІРѕ С…РѕРґРѕРІ: {_score}.";
+            ResetLabel.gameObject.SetActive(true);
         }
     }
+
     private void ResetValue()
     {
-        _gameOver = false;
+        int _sumOld = 0;
         _sum = 0;
         _num = 0;
         _score = 0;
-        mainText.text = $"Нажимайте цифры на клавиатуре (от 1 до 9).";
-        numText.text = $"{_num}";
-        sumText.text = $"Сумма: {_sum} + {_num} = {_sum += _num}";
-        restText.gameObject.SetActive(false);
+        _isGameOver = false;
+        
+        HeaderLabel.text = $"РќР°Р¶РёРјР°Р№С‚Рµ С†РёС„СЂС‹ РЅР° РєР»Р°РІРёР°С‚СѓСЂРµ (РѕС‚ 1 РґРѕ 9).";
+         _sumOld = _sum;
+        _sum += _num;
+        NumLabel.text = $"{_num}";
+        
+        SumLabel.text = $"РЎСѓРјРјР°: {_sumOld} + {_num} = {_sum}";
+        ResetLabel.gameObject.SetActive(false);
     }
+
+    #endregion
 }

@@ -3,87 +3,96 @@ using UnityEngine;
 
 public class MagicNumbers : MonoBehaviour
 {
-    public int maxValue = 1000;
-    public int minValue;
+    #region Variables
+
+    public int MaxValue = 1000;
+    public int MinValue;
+    public Text HeaderLabel;
+    public Text ScoreLabel;
+    public Text SecondLabel;
+
     private int _guess;
     private int _score;
-
-    private bool _gameOver;
-
     private int _defMaxValue;
     private int _defMinValue;
-    private int _defGuess;
-    private int _defScore;
 
-    public Text mainText;
-    public Text secondText;
-    public Text scoreText;
-    
+    private bool _isGameOver;
+
+    #endregion
+
+
+    #region Unity lifecycle
 
     void Start()
     {
-        _score = 0;
-        
-        _defScore = _score;
-        _defGuess = _guess;
-        _defMaxValue = maxValue;
-        _defMinValue = minValue;
+        _defMaxValue = MaxValue;
+        _defMinValue = MinValue;
 
         ResetValue();
-        
     }
 
 
     void Update()
     {
-        if (!_gameOver)
+        if (!_isGameOver)
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                maxValue = _guess;
+                MaxValue = _guess;
                 GuessMethod();
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                minValue = _guess;
+                MinValue = _guess;
                 GuessMethod();
             }
+
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                _gameOver = true;
-                secondText.color = new Color(0.0f, 0.7f, 0.0f);
-                secondText.text = $"Число угадано! {_guess}\n\nНажми Space для рестарта!";
+                _isGameOver = true;
+                SecondLabel.color = new Color(0.0f, 0.7f, 0.0f);
+                SecondLabel.text = $"Р§РёСЃР»Рѕ СѓРіР°РґР°РЅРѕ! {_guess}\n\nРќР°Р¶РјРёС‚Рµ Space РґР»СЏ СЂРµСЃС‚Р°СЂС‚Р°!";
             }
         }
-        
-        // Сброс игры
-        if (Input.GetKeyDown(KeyCode.Space) && _gameOver)
+
+
+        if (_isGameOver && Input.GetKeyDown(KeyCode.Space))
         {
             ResetValue();
         }
-
     }
+
+    #endregion
+
+
+    #region Private methods
 
     private void GuessMethod()
     {
-        scoreText.text = $"Кол-во попыток: {++_score}";
-        _guess = (minValue + maxValue) / 2;
-        secondText.text = $"Твоё число...{_guess}?\n\nЕсли да, нажми Enter!";
+        _score++;
+        UpdateScoreLable();
+        _guess = (MinValue + MaxValue) / 2;
+        SecondLabel.text = $"РўРІРѕС‘ С‡РёСЃР»Рѕ...{_guess}?\n\nР•СЃР»Рё РґР°, РЅР°Р¶РјРё Enter!";
     }
+
+    private void UpdateScoreLable()
+    {
+        ScoreLabel.text = $"РљРѕР»-РІРѕ РїРѕРїС‹С‚РѕРє: {_score}";
+    }
+
     private void ResetValue()
     {
-        _gameOver = false;
-        maxValue = _defMaxValue;
-        minValue = _defMinValue;
-        _score = _defScore;
-        _guess = _defGuess;
+        _score = 0;
+        _isGameOver = false;
+        MaxValue = _defMaxValue;
+        MinValue = _defMinValue;
 
-        mainText.text = $"Загадай число от {minValue} до {maxValue}.";
-        
-        scoreText.text = $"Кол-во попыток: {_score}";
-        
-        secondText.color = new Color(0.7f, 0.06f, 0.06f);
-        secondText.text = "Нажми UpArrow, чтобы начать!";
+        HeaderLabel.text = $"Р—Р°РіР°РґР°Р№ С‡РёСЃР»Рѕ РѕС‚ {MinValue} РґРѕ {MaxValue}.";
+        UpdateScoreLable();
+        SecondLabel.color = new Color(0.7f, 0.06f, 0.06f);
+        SecondLabel.text = "РќР°Р¶РјРёС‚Рµ UpArrow, С‡С‚РѕР±С‹ РЅР°С‡Р°С‚СЊ!";
     }
+
+    #endregion
 }

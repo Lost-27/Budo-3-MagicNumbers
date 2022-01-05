@@ -238,11 +238,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06b65bed5c14f74588ad6b73c8aebed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 1000
-  minValue: 0
-  mainText: {fileID: 2091360289}
-  secondText: {fileID: 1106833580}
-  scoreText: {fileID: 1942804743}
+  MaxValue: 1000
+  MinValue: 0
+  HeaderLabel: {fileID: 2091360289}
+  ScoreLabel: {fileID: 1942804743}
+  SecondLabel: {fileID: 1106833580}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 1106833581}
   - component: {fileID: 1106833580}
   m_Layer: 5
-  m_Name: Second Text
+  m_Name: SecondLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 1942804744}
   - component: {fileID: 1942804743}
   m_Layer: 5
-  m_Name: Score Text
+  m_Name: ScoreLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,7 +568,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score : 1'
+  m_Text: 'Score : 0'
 --- !u!222 &1942804744
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 2091360290}
   - component: {fileID: 2091360289}
   m_Layer: 5
-  m_Name: Main Text
+  m_Name: HeaderLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
