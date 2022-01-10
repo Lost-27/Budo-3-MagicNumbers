@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/StartScene.unity
+    guid: 32619b7cef01d37458847a4c8ab2f5bb
+  - enabled: 1
+    path: Assets/Scenes/MagicNumbersScene.unity
+    guid: 56deea963a0168a428cd9461e6f08094
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 3d323128771b1774ca39e70c1488754e
+  - enabled: 0
+    path: Assets/Scenes/SumNumbersScene.unity
+    guid: 3c1c3571df33860489a5d8e3d49e32de
   m_configObjects: {}

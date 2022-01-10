@@ -1,20 +1,21 @@
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MagicNumbers : MonoBehaviour
 {
     #region Variables
 
-    public int MaxValue = 1000;
-    public int MinValue;
-    public Text HeaderLabel;
-    public Text ScoreLabel;
-    public Text SecondLabel;
+    public MainGuessConfig GuessConfig;
 
+    public TextMeshProUGUI HeaderLabel;
+    public TextMeshProUGUI ScoreLabel;
+    public TextMeshProUGUI SecondLabel;
+
+    private int _maxValue;
+    private int _minValue;
     private int _guess;
     private int _score;
-    private int _defMaxValue;
-    private int _defMinValue;
 
     private bool _isGameOver;
 
@@ -23,43 +24,45 @@ public class MagicNumbers : MonoBehaviour
 
     #region Unity lifecycle
 
-    void Start()
+    private void Awake()
     {
-        _defMaxValue = MaxValue;
-        _defMinValue = MinValue;
+        _maxValue = GuessConfig.MaxValue;
+        _minValue = GuessConfig.MinValue;
+    }
 
-        ResetValue();
+    private void Start()
+    {
+        HeaderLabel.text = $"Загадай число от {_minValue} до {_maxValue}.";
+        UpdateScoreLable();
+        GuessMethod();
     }
 
 
-    void Update()
+    private void Update()
     {
         if (!_isGameOver)
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.DownArrow) || GuessConfig.IsLessButtonActive)
             {
-                MaxValue = _guess;
+                GuessConfig.IsLessButtonActive = false;
+                _maxValue = _guess;
                 GuessMethod();
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow) || GuessConfig.IsMoreButtonActive)
             {
-                MinValue = _guess;
+                GuessConfig.IsMoreButtonActive = false;
+                _minValue = _guess;
+
                 GuessMethod();
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return) || GuessConfig.IsTrueButtonActive)
             {
-                _isGameOver = true;
-                SecondLabel.color = new Color(0.0f, 0.7f, 0.0f);
-                SecondLabel.text = $"Число угадано! {_guess}\n\nНажмите Space для рестарта!";
+                GuessConfig.IsTrueButtonActive = false;
+                GuessConfig.Guess = _guess;
+                SceneManager.LoadScene(2);
             }
-        }
-
-
-        if (_isGameOver && Input.GetKeyDown(KeyCode.Space))
-        {
-            ResetValue();
         }
     }
 
@@ -72,26 +75,13 @@ public class MagicNumbers : MonoBehaviour
     {
         _score++;
         UpdateScoreLable();
-        _guess = (MinValue + MaxValue) / 2;
-        SecondLabel.text = $"Твоё число...{_guess}?\n\nЕсли да, нажми Enter!";
+        _guess = (_minValue + _maxValue) / 2;
+        SecondLabel.text = $"Твоё число...{_guess}?";
     }
 
     private void UpdateScoreLable()
     {
         ScoreLabel.text = $"Кол-во попыток: {_score}";
-    }
-
-    private void ResetValue()
-    {
-        _score = 0;
-        _isGameOver = false;
-        MaxValue = _defMaxValue;
-        MinValue = _defMinValue;
-
-        HeaderLabel.text = $"Загадай число от {MinValue} до {MaxValue}.";
-        UpdateScoreLable();
-        SecondLabel.color = new Color(0.7f, 0.06f, 0.06f);
-        SecondLabel.text = "Нажмите UpArrow, чтобы начать!";
     }
 
     #endregion
